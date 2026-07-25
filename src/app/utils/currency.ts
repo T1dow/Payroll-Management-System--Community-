@@ -5,20 +5,20 @@ export interface CurrencyConfig {
   name: string;
   flag: string;
   /** Use Indian scale (lakh / crore) instead of K / M / B */
-  indianScale: boolean;
+  ghanaScale: boolean;
 }
 
 export const CURRENCY_CONFIGS: Record<string, CurrencyConfig> = {
-  INR: { code: 'INR', symbol: '₹',    locale: 'en-IN', name: 'Indian Rupee',      flag: '🇮🇳', indianScale: true  },
-  USD: { code: 'USD', symbol: '$',    locale: 'en-US', name: 'US Dollar',         flag: '🇺🇸', indianScale: false },
-  EUR: { code: 'EUR', symbol: '€',    locale: 'de-DE', name: 'Euro',              flag: '🇪🇺', indianScale: false },
-  GBP: { code: 'GBP', symbol: '£',    locale: 'en-GB', name: 'British Pound',     flag: '🇬🇧', indianScale: false },
-  AED: { code: 'AED', symbol: 'AED ', locale: 'ar-AE', name: 'UAE Dirham',        flag: '🇦🇪', indianScale: false },
-  SGD: { code: 'SGD', symbol: 'S$',   locale: 'en-SG', name: 'Singapore Dollar',  flag: '🇸🇬', indianScale: false },
-  JPY: { code: 'JPY', symbol: '¥',    locale: 'ja-JP', name: 'Japanese Yen',      flag: '🇯🇵', indianScale: false },
-  AUD: { code: 'AUD', symbol: 'A$',   locale: 'en-AU', name: 'Australian Dollar', flag: '🇦🇺', indianScale: false },
-  CAD: { code: 'CAD', symbol: 'C$',   locale: 'en-CA', name: 'Canadian Dollar',   flag: '🇨🇦', indianScale: false },
-  CHF: { code: 'CHF', symbol: 'CHF ', locale: 'de-CH', name: 'Swiss Franc',       flag: '🇨🇭', indianScale: false },
+  GHS: { code: 'GHS', symbol: '₵',    locale: 'en-GH', name: 'Ghana Cedis',      flag: 'Gh', ghanaScale: true  },
+  USD: { code: 'USD', symbol: '$',    locale: 'en-US', name: 'US Dollar',         flag: '🇺🇸', ghanaScale: false },
+  EUR: { code: 'EUR', symbol: '€',    locale: 'de-DE', name: 'Euro',              flag: '🇪🇺', ghanaScale: false },
+  GBP: { code: 'GBP', symbol: '£',    locale: 'en-GB', name: 'British Pound',     flag: '🇬🇧', ghanaScale: false },
+  AED: { code: 'AED', symbol: 'AED ', locale: 'ar-AE', name: 'UAE Dirham',        flag: '🇦🇪', ghanaScale: false },
+  SGD: { code: 'SGD', symbol: 'S$',   locale: 'en-SG', name: 'Singapore Dollar',  flag: '🇸🇬', ghanaScale: false },
+  JPY: { code: 'JPY', symbol: '¥',    locale: 'ja-JP', name: 'Japanese Yen',      flag: '🇯🇵', ghanaScale: false },
+  AUD: { code: 'AUD', symbol: 'A$',   locale: 'en-AU', name: 'Australian Dollar', flag: '🇦🇺', ghanaScale: false },
+  CAD: { code: 'CAD', symbol: 'C$',   locale: 'en-CA', name: 'Canadian Dollar',   flag: '🇨🇦', ghanaScale: false },
+  CHF: { code: 'CHF', symbol: 'CHF ', locale: 'de-CH', name: 'Swiss Franc',       flag: '🇨🇭', ghanaScale: false },
 };
 
 export function getCurrencyConfig(code: string): CurrencyConfig {
@@ -57,12 +57,12 @@ export function formatFull(amount: number, code: string): string {
  *       formatCompact(125000,   'USD') → '$125K'
  */
 export function formatCompact(amount: number, code: string): string {
-  const { symbol, indianScale } = getCurrencyConfig(code);
+  const { symbol, ghanaScale } = getCurrencyConfig(code);
   const abs = Math.abs(amount);
   const sign = amount < 0 ? '-' : '';
   const p = (n: number, d: number) => n.toFixed(d).replace(/\.0+$/, '');
 
-  if (indianScale) {
+  if (ghanaScale) {
     if (abs >= 1e7) return `${sign}${symbol}${p(abs / 1e7, 2)}Cr`;
     if (abs >= 1e5) return `${sign}${symbol}${p(abs / 1e5, 1)}L`;
     if (abs >= 1e3) return `${sign}${symbol}${p(abs / 1e3, 1)}K`;
@@ -79,11 +79,11 @@ export function formatCompact(amount: number, code: string): string {
  * e.g. formatCompact(44890750, 'INR', 1) → '₹4.5Cr'
  */
 export function formatCompactP(amount: number, code: string, precision: number): string {
-  const { symbol, indianScale } = getCurrencyConfig(code);
+  const { symbol, ghanaScale } = getCurrencyConfig(code);
   const abs = Math.abs(amount);
   const sign = amount < 0 ? '-' : '';
 
-  if (indianScale) {
+  if (ghanaScale) {
     if (abs >= 1e7) return `${sign}${symbol}${(abs / 1e7).toFixed(precision)}Cr`;
     if (abs >= 1e5) return `${sign}${symbol}${(abs / 1e5).toFixed(precision)}L`;
     if (abs >= 1e3) return `${sign}${symbol}${(abs / 1e3).toFixed(precision)}K`;

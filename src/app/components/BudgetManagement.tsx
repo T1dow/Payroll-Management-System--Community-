@@ -54,9 +54,9 @@ export function BudgetManagement({ currentUser, organization }: BudgetManagement
     const rows = departmentBudgets.map(d => ({
       Department: d.department,
       Headcount: d.headcount,
-      'Allocated (₹)': d.allocated,
-      'Spent (₹)': d.spent,
-      'Variance (₹)': d.variance,
+      'Allocated (₵)': d.allocated,
+      'Spent (₵)': d.spent,
+      'Variance (₵)': d.variance,
       'Utilization %': ((d.spent / d.allocated) * 100).toFixed(1) + '%',
       Status: d.variance < 0 ? 'Over Budget' : (d.spent / d.allocated) >= 0.95 ? 'Near Limit' : 'On Track',
     }));

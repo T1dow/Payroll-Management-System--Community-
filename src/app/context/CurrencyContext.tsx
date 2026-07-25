@@ -5,7 +5,7 @@ import {
 } from '../utils/currency';
 
 interface CurrencyContextValue {
-  /** Active currency code e.g. 'INR', 'USD' */
+  /** Active currency code e.g. 'GHS', 'USD' */
   currencyCode: string;
   /** Change the active currency globally */
   setCurrencyCode: (code: string) => void;
@@ -15,8 +15,8 @@ interface CurrencyContextValue {
   sym: string;
   /**
    * Compact smart format.
-   * INR: L / Cr   |   Others: K / M / B
-   * e.g. fmt(44890750) → '₹4.49Cr' (INR)  or  '$44.89M' (USD)
+   * GHS: L / Cr   |   Others: K / M / B
+   * e.g. fmt(44890750) → '₹4.49Cr' (GHS)  or  '$44.89M' (USD)
    */
   fmt: (amount: number) => string;
   /**
@@ -26,24 +26,24 @@ interface CurrencyContextValue {
   fmtP: (amount: number, precision: number) => string;
   /**
    * Full exact format with locale-aware separators.
-   * e.g. fmtFull(1250000) → '₹12,50,000' (INR)  or  '$1,250,000' (USD)
+   * e.g. fmtFull(1250000) → '₹12,50,000' (GHS)  or  '$1,250,000' (USD)
    */
   fmtFull: (amount: number) => string;
 }
 
 const CurrencyContext = createContext<CurrencyContextValue>({
-  currencyCode: 'INR',
+  currencyCode: 'GHS',
   setCurrencyCode: () => {},
-  config: getCurrencyConfig('INR'),
+  config: getCurrencyConfig('GHS'),
   sym: '₹',
-  fmt: (n) => formatCompact(n, 'INR'),
-  fmtP: (n, p) => formatCompactP(n, 'INR', p),
-  fmtFull: (n) => formatFull(n, 'INR'),
+  fmt: (n) => formatCompact(n, 'GHS'),
+  fmtP: (n, p) => formatCompactP(n, 'GHS', p),
+  fmtFull: (n) => formatFull(n, 'GHS'),
 });
 
 export function CurrencyProvider({
   children,
-  initialCode = 'INR',
+  initialCode = 'GHS',
 }: {
   children: React.ReactNode;
   initialCode?: string;
